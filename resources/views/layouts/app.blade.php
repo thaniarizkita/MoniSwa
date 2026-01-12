@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title') - SMAS Azzainiyyah</title>
+    <title>@yield('title') - MoniSwa</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,71 +12,159 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
-    <!-- Custom CSS -->
     <style>
-        body {
-            min-height: 100vh;
-            background-color: #f8f9fa;
+        :root{
+            --tosca: #20c4b7;
+            --tosca-dark: #17a79f;
+            --orange: #ff7a00;
+            --muted: #6c757d;
+            --card-shadow: 0 6px 24px rgba(16,24,40,0.06);
         }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, #fbfdfc 0%, #f3fbfa 100%);
+            color: #083a38;
+        }
+
+        /* Sidebar */
         .sidebar {
             min-height: 100vh;
-            background: linear-gradient(180deg, #0d6efd 0%, #0a58ca 100%);
+            background: linear-gradient(180deg, var(--tosca) 0%, var(--tosca-dark) 100%);
             color: white;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 8px rgba(0,0,0,0.06);
         }
+
+        .sidebar .p-4 {
+            padding-top: 1.85rem;
+            padding-bottom: 1.85rem;
+        }
+
+        .sidebar h4 {
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .sidebar hr {
+            border-top: 1px solid rgba(255,255,255,0.12);
+        }
+
         .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-            padding: 12px 20px;
+            color: rgba(255,255,255,0.94);
+            padding: 10px 14px;
             border-radius: 8px;
-            margin: 4px 0;
-            transition: all 0.3s;
+            margin: 5px 0;
+            transition: background .18s ease, transform .18s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
         }
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            background-color: rgba(255,255,255,0.2);
-            color: white;
-        }
+
         .sidebar .nav-link i {
-            margin-right: 10px;
             width: 20px;
+            font-size: 1.05rem;
+            opacity: 0.95;
         }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(6px);
+            color: #fff;
+        }
+
+        .sidebar .nav-link.active {
+            background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+        }
+
+        /* Main content wrapper */
         .content-wrapper {
-            padding: 30px;
+            padding: 28px;
+            min-height: calc(100vh - 64px);
         }
+
+        /* Cards */
         .card {
             border: none;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 24px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 22px;
         }
+
         .card-header {
-            background-color: white;
-            border-bottom: 2px solid #e9ecef;
-            padding: 20px;
-            font-weight: 600;
-            font-size: 1.1rem;
+            background-color: transparent;
+            border-bottom: none;
+            padding: 18px 20px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #083a38;
         }
+
         .stats-card {
-            border-left: 4px solid #0d6efd;
+            border-left: 4px solid var(--tosca);
         }
+
+        /* Table adjustments */
         .table {
             margin-bottom: 0;
+            color: #163a38;
         }
+
+        /* Buttons and badges */
         .btn {
             border-radius: 8px;
-            padding: 8px 16px;
+            padding: 8px 14px;
         }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--tosca), var(--orange));
+            border: none;
+            box-shadow: 0 10px 30px rgba(32,196,183,0.06);
+        }
+
         .badge {
-            padding: 6px 12px;
-            font-weight: 500;
+            padding: 6px 10px;
+            font-weight: 600;
+            border-radius: 8px;
         }
+
+        /* Top navbar */
         .navbar-brand {
-            font
-            -weight: 700;
-        font-size: 1.3rem;
-}
-</style>
-@stack('styles')
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #083a38;
+        }
+
+        .navbar {
+            box-shadow: 0 1px 6px rgba(16,24,40,0.04);
+        }
+
+        .navbar .navbar-text {
+            font-weight: 600;
+            color: #0b2b2a;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 10px;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 991.98px) {
+            .sidebar { min-height: auto; position: relative; }
+            .content-wrapper { padding: 18px; }
+        }
+
+        @media (max-width: 576px) {
+            .sidebar { display: none; }
+            .content-wrapper { padding: 12px; }
+        }
+    </style>
+    @stack('styles')
 </head>
 <body>
     @auth
@@ -86,7 +174,7 @@
             <div class="col-md-3 col-lg-2 px-0 sidebar">
                 <div class="p-4">
                     <h4 class="text-white mb-4">
-                        <i class="bi bi-mortarboard-fill"></i> SMAS Azzainiyyah
+                        <i class="bi bi-mortarboard-fill"></i> MoniSwa
                     </h4>
                     <hr class="text-white">
                     <div class="mb-3">
@@ -165,3 +253,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 @stack('scripts')
+</body>
+</html>

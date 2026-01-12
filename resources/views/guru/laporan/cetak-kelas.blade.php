@@ -22,7 +22,7 @@
     <div class="header">
         <h2>SMAS AZZAINIYYAH</h2>
         <p>Laporan Prestasi dan Pelanggaran per Kelas</p>
-        <p>Tahun Ajaran 2024/2025</p>
+        <p>Tahun Ajaran 2025/2026</p>
     </div>
     <div class="summary">
     <h4>Kelas: {{ $kelas->nama_kelas }}</h4>

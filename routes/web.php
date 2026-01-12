@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\SiswaController;
@@ -17,15 +18,14 @@ use App\Http\Controllers\Guru\LaporanController as GuruLaporan;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 use App\Http\Controllers\Wali\DashboardController as WaliDashboard;
 
-// Redirect root ke login
-Route::get('/', function () {
-    return redirect('/login');
-});
+// Landing Page
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {

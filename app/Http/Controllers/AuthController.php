@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
+    // Tampilkan form login dengan role selector
     public function showLogin()
     {
         return view('auth.login');
@@ -20,17 +20,26 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required',
+            'role' => 'required|in:admin,guru,siswa,wali', // Validasi role
         ]);
 
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            
+            // Cek apakah role yang dipilih sesuai dengan role user
+            if ($user->role !== $request->role) {
+                Auth::logout();
+                return back()->withErrors([
+                    'role' => 'Role yang Anda pilih tidak sesuai dengan akun ini.',
+                ])->withInput();
+            }
+
             $request->session()->regenerate();
 
             // Redirect berdasarkan role
-            $role = Auth::user()->role;
-            
-            switch ($role) {
+            switch ($user->role) {
                 case 'admin':
                     return redirect()->intended('/admin/dashboard');
                 case 'guru':
@@ -56,6 +65,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }
